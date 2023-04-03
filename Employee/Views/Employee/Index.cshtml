@@ -2,7 +2,7 @@
 @{
 
     ViewData["Title"] = "Employee Details";
-    var successMessage = TempData["SuccessMessgage"]?.ToString();
+    var successMessage = TempData["successMessage"]?.ToString();
     var errorMessage = TempData["errorMessage"]?.ToString();
 }
 
@@ -11,7 +11,7 @@
 @if (!string.IsNullOrWhiteSpace("@successMessage"))
 {
     <div class="alert alert-success">
-        <strong>Success</strong>@successMessage
+        <strong>Successfully</strong>@successMessage
         <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="close"></button>
 
     </div>
@@ -51,10 +51,10 @@ else if (!string.IsNullOrWhiteSpace("@errorMessage"))
                         <td>@employees.Salary</td>
                         <td>
                             <div class="btn-group btn-group-sm">
-                                <a asp-controller="Emoloyee" asp-action="Edit" asp-route-id="@employees.Id" class=" btn btn-primary">
+                                <a asp-controller="Employee" asp-action="Edit" asp-route-id="@employees.Id" class=" btn btn-primary">
                                     Edit
                                 </a>
-                                <a asp-controller="Emoloyee" asp-action="Delete" asp-route-id="@employees.Id" class=" btn btn-danger">
+                                <a asp-controller="Employee" asp-action="Delete" asp-route-id="@employees.Id" class=" btn btn-danger">
                                     Delete
                                 </a>
 

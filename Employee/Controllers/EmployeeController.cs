@@ -66,7 +66,7 @@ namespace EmployeeData.Controllers
                     _context.employees.Add(employee);
                     //_context.employees.Add(employee);
                     _context.SaveChanges();
-                    TempData["successMessage"] = "Success";
+                    TempData["successMessage"] = "Employee Cerated";
                     return RedirectToAction("Index");
                 }
                 else
@@ -77,13 +77,162 @@ namespace EmployeeData.Controllers
             }
             catch (Exception ex)
             {
-                TempData["errorMessage"]= ex.Message;
+                TempData["errorMessage"] = ex.Message;
                 return View();
 
-           
             }
         }
 
+
+
+        /* public IActionResult Edit()
+         {
+             return View();
+         }*/
+
+        [HttpGet]
+        [Route("Edit/{id}")]
+        public IActionResult Edit(int Id)
+        {
+            try
+            {
+                var employee = _context.employees.SingleOrDefault(x => x.Id == Id);
+                if (employee != null)
+                {
+                    var employeeView = new EmployeeViewModel()
+                    {
+                        Id = employee.Id,
+                        FirstName = employee.FristName,
+                        LastName = employee.LastName,
+                        DateOfBirth = employee.DateOfBirth,
+                        Email = employee.Email,
+                        Salary = employee.Salary
+
+                    };
+                    return View(employeeView);
+                }
+                else
+                {
+                    TempData["errorMessage"] = "Data not available with this Id";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["errorMessage"] = ex.Message;
+                return RedirectToAction("Index");
+
+            }
+
+        }
+
+        [HttpPost]
+        [Route("Edit/{id}")]
+
+        public IActionResult Edit(EmployeeViewModel employeeEdit)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var employee = new Employees()
+                    {
+                        Id = employeeEdit.Id,
+                        FristName = employeeEdit.FirstName,
+                        LastName = employeeEdit.LastName,
+                        DateOfBirth = employeeEdit.DateOfBirth,
+                        Email = employeeEdit.Email,
+                        Salary = employeeEdit.Salary
+
+                    };
+                    _context.employees.Update(employee);
+                    _context.SaveChanges();
+                    TempData["successMessage"] = "Data Updated Successfully.";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["errorMessgae"] = "Model is Invalid";
+                    return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["errorMessage"] = ex.Message;
+                return View();
+            }
+        }
+
+        /* private IActionResult RedirectTOAction(string v)
+         {
+             throw new NotImplementedException();
+         }*/
+        [HttpGet]
+        [Route("Delete/{id}")]
+        public IActionResult Delete(int Id)
+        {
+            try
+            {
+                var employee = _context.employees.SingleOrDefault(x => x.Id == Id);
+                if (employee != null)
+                {
+                    var viewEmployee = new EmployeeViewModel()
+                    {
+                        Id = employee.Id,
+                        FirstName = employee.FristName,
+                        LastName = employee.LastName,
+                        DateOfBirth = employee.DateOfBirth,
+                        Email = employee.Email,
+                        Salary = employee.Salary
+
+                    };
+                    return View(viewEmployee);
+                }
+                else
+                {
+                    TempData["errorMessage"] = "Data not available with this Id";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["errorMessage"] = ex.Message;
+                return RedirectToAction("Index");
+
+            }
+
+        }
+
+        [HttpPost]
+        [Route("Delete/{id}")]
+        public IActionResult Delete(EmployeeViewModel deleteemp)
+        {
+            try
+            {
+                var employee = _context.employees.FirstOrDefault(x => x.Id == deleteemp.Id);
+
+                if (employee != null)
+                {
+                    _context.employees.Remove(employee);
+                    _context.SaveChanges();
+                    TempData["successMessage"] = "Deleted Employee Data";
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["errorMessgae"] = "Model is Invalid";
+                    return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["errorMessage"] = ex.Message;
+                return View();
+
+
+            }
+        }
     }
 }
 

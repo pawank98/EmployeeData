@@ -1,38 +1,41 @@
-﻿@model EmployeeData.Models.EmployeeViewModel
+﻿@model EmployeeData.Models.EmployeeViewModel 
 
 @{
-    ViewData["Title"] = "Create ";
-    var errorMessage = TempData["errorMessage"]?.ToString();
-
+    ViewData["Title"] = "Edit";
+    var errorMessgae = TempData["errorMessage"]?.ToString();
 }
 <h3>@ViewData["Title"]</h3>
 <hr />
-
 @if (!string.IsNullOrWhiteSpace("@errorMessage"))
 {
     <div class="alert alert-success">
-        <strong>Error</strong>
+        <strong>Error</strong> @errorMessgae
         <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="close"></button>
     </div>
 }
-<form action="create" method="post"accept-charset=" colspan-6">
+
+<form action="Edit" method="post" autocomplete="off">
+    <div class="mb-3" >
+        <label class="form-label">Id</label>
+        <input type="text" class="form-control" asp-for="Id" readonly />
+    </div>
     <div class="mb-3">
         <label class="form-label">First Name</label>
         <input type="text" class="form-control" asp-for="FirstName" />
         <span asp-validation-for="FirstName" class="text-danger"></span>
-    </div class="mb-3">
-    <div>
+    </div>
+    <div class="mb-3">
         <label class="form-label">Last Name</label>
         <input type="text" class="form-control" asp-for="LastName" />
         <span asp-validation-for="LastName" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label class="form-label">Date of Birth</label>
+        <label class="form-label">Date Of Birth</label>
         <input type="date" class="form-control" asp-for="DateOfBirth" />
         <span asp-validation-for="DateOfBirth" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label class="form-label">E-mail</label>
+        <label class="form-label">Email</label>
         <input type="email" class="form-control" asp-for="Email" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
@@ -42,7 +45,7 @@
         <span asp-validation-for="Salary" class="text-danger"></span>
     </div>
     <div class="d-grid">
-        <button type="submit" class="btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Update</button>
 
     </div>
 
